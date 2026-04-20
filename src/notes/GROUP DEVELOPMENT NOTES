@@ -1,0 +1,22 @@
+ Smart Campus Management System
+
+ Modern universities manage large volumes of information every day,
+ including student records, course registrations,
+ library resources, hostel allocation, help desk, and event bookings.
+ The performance of these systems depends heavily on the correct use of data structures.
+ You are tasked in groups to design and implement a Smart Campus Management System using Java.
+ The system will simulate how a university stores and processes campus data.
+ The application must run as a menu-driven console program that allows users to interact with the system.
+ The assignment aims to help students understand how different data structures solve different
+ problems in real-world systems and to develop your skills in:
+
+-Selecting appropriate data structures for specific problems
+
+-Implementing custom data structures from scratch
+
+-Designing modular, object-oriented systems
+
+-Handling real-world data management challenges
+
+------------------------------------------------------------------------------------------------------------
+
