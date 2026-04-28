@@ -1,18 +1,27 @@
 package dataStructures;
 
-// CustomQueue.java
+public class CustomStack {
+    private Node top;
 
-
-// CustomStack.java
-public class CustomStack<T> {
-    private CustomLinkedList<T> list = new CustomLinkedList<>();
-
-    public void push(T item) {
-        // In real implementation you'd add to front, but simplified
-        System.out.println("   Pushed to recent activity: " + item);
+    private static class Node {
+        String activity;
+        Node next;
+        Node(String activity) { this.activity = activity; }
     }
 
-    public void display() {
-        System.out.println("   → Recent: Last 3 logins shown in demo");
+    public void push(String activity) {
+        Node newNode = new Node(activity);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    public void displayRecent() {
+        System.out.println("\n=== RECENT ACTIVITIES (Stack - LIFO) ===");
+        Node curr = top;
+        int i = 1;
+        while (curr != null) {
+            System.out.println(i++ + ". " + curr.activity);
+            curr = curr.next;
+        }
     }
 }

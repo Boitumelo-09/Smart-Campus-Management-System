@@ -1,13 +1,39 @@
 package dataStructures;
 
-public class CustomQueue<T> {
-    private CustomLinkedList<T> list = new CustomLinkedList<>();
+public class CustomQueue {
+    private Node front, rear;
 
-    public void enqueue(T item) { list.add(item); }  // We'll reuse linked list logic
-    public T dequeue() { /* Simplified - in real you'd implement proper remove first */
-        // For this assignment, we'll simulate
-        System.out.println("   (Dequeued from queue)");
-        return null; // Placeholder - you can extend
+    private static class Node {
+        String data;
+        Node next;
+        Node(String data) { this.data = data; }
     }
-    public boolean isEmpty() { return false; } // Improve as needed
+
+    public void enqueue(String ticket) {
+        Node newNode = new Node(ticket);
+        if (rear == null) {
+            front = rear = newNode;
+        } else {
+            rear.next = newNode;
+            rear = newNode;
+        }
+    }
+
+    public String dequeue() {
+        if (front == null) return null;
+        String data = front.data;
+        front = front.next;
+        if (front == null) rear = null;
+        return data;
+    }
+
+    public void displayHelpDesk() {
+        System.out.println("\n=== HELP DESK QUEUE ===");
+        Node curr = front;
+        int i = 1;
+        while (curr != null) {
+            System.out.println(i++ + ". " + curr.data);
+            curr = curr.next;
+        }
+    }
 }

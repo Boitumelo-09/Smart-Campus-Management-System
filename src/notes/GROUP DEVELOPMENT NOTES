@@ -19,4 +19,95 @@
 -Handling real-world data management challenges
 
 ------------------------------------------------------------------------------------------------------------
+Data Structure Choices in the Smart Campus Management System
+In designing this system,
+     we deliberately avoided Java’s built-in Collections Framework (ArrayList, HashMap, TreeMap, etc.)
+       and implemented custom data structures from scratch.
+This demonstrates a clear understanding of how different data structures solve real-world problems
+       with different trade-offs in time and space complexity.
 
+
+Here’s the justification for each choice:
+
+
+1. CustomHashTable – For Student Login (Fast Lookup by Student ID)
+        Why HashTable?
+    -   Student login is the most frequent operation in the system.
+    -   We need O(1) average-case time complexity for retrieving a student using their unique Student ID.
+
+Perfect Use Case: Key-Value lookup where the key is studentId and the value is the Student object.
+Chaining (Separate Chaining) was used to handle collisions.
+A prime number (31) was chosen as table size to reduce clustering.
+
+Real-world Campus Analogy:
+Just like a university database needs to instantly verify a student’s credentials during peak registration periods,
+          HashTable gives lightning-fast authentication.
+Alternative Considered: LinkedList would be O(n) — too slow for login.
+
+
+
+2. CustomLinkedList – For Storing and Displaying All Students
+         Why LinkedList?
+       We needed a simple, dynamic way to maintain an ordered collection of all registered students
+       and display them sequentially.
+
+    -Easy insertion at the end (add())
+    -Straightforward traversal for displaying the full student list
+    -Good for scenarios where we frequently need to iterate through all records
+
+Real-world Campus Analogy:
+When the admin wants to view the complete register of students (like during audits or reports),
+        LinkedList provides clean, sequential access without the overhead of more complex structures.
+Alternative Considered: Array – but arrays have fixed size. LinkedList grows dynamically.
+
+
+
+
+3. CustomBST (Binary Search Tree) – For Searching and Sorting by Name
+       Why BST?
+     We needed efficient searching by name (which is not unique and not suitable for hashing)
+      and the ability to display students in sorted alphabetical order.
+
+    -In-order traversal naturally gives sorted output (very useful for reports).
+    -Average time complexity for search = O(log n) when the tree is balanced.
+    -Demonstrates non-linear data structure knowledge.
+
+Real-world Campus Analogy:
+     When the admin or faculty needs to quickly find a student by name (e.g. “Where is Mkhondo Boitumelo?”),
+     BST allows fast searching while also supporting sorted listings for name-based reports.
+Alternative Considered: Sorted Array – but insertion would be expensive (O(n)).
+
+
+
+
+
+
+4. CustomQueue – For Help Desk Ticket System
+      Why Queue?
+    Help desk requests should be handled in First-In-First-Out
+    (FIFO) order — the student who reported first should be attended first.
+
+   -enqueue() for new tickets
+   -dequeue() for resolving tickets
+   -Simple linked-list based implementation
+
+Real-world Campus Analogy:
+   University help desks (IT support, registration issues, hostel maintenance)
+   naturally follow a queue system. The first complaint logged must be the first one handled.
+   This clearly shows understanding of FIFO principle in service-oriented systems.
+
+
+
+
+
+5. CustomStack – For Recent Activity Log
+      Why Stack?
+    We needed to track recent system activities (logins, actions)
+    where the most recent action should appear first — Last-In-First-Out (LIFO) behavior.
+
+  -push() for new activities
+  -Display shows latest activities on top
+
+     Real-world Campus Analogy:
+   Security and audit logs in campus systems usually show the most recent events first.
+   Stack is perfect for “Recent Activity” or “Last 5 Actions” features.
