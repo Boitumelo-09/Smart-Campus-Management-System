@@ -1,5 +1,4 @@
 package dataStructures;
-
 import models.Student;
 
 public class CustomBST {
@@ -27,7 +26,8 @@ public class CustomBST {
     }
 
     public void searchByName(String name) {
-        System.out.println("\nSearching for: " + name);
+        IO.readln("Confirm Search For: "+name.concat("..."));
+
         Node result = searchRec(root, name);
         if (result != null) {
             System.out.println("Found: " + result.data);
@@ -45,7 +45,7 @@ public class CustomBST {
     }
 
     public void inorderDisplay() {
-        System.out.println("\nStudents sorted by Name :");
+        IO.println("\nStudents sorted by Name :");
         inorderRec(root);
     }
 

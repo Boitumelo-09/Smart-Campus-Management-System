@@ -13,7 +13,7 @@ public class CustomHashTable {
         }
     }
 
-    private Entry[] table;
+    private final Entry[] table;
     private int size;
 
     public CustomHashTable() {

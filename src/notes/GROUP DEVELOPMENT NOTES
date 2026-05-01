@@ -12,13 +12,17 @@
 
 -Selecting appropriate data structures for specific problems
 
--Implementing custom data structures from scratch
+-Implementing custom data structures from //scratch
 
 -Designing modular, object-oriented systems
 
 -Handling real-world data management challenges
 
 ------------------------------------------------------------------------------------------------------------
+
+
+    SOLUTION
+
 Data Structure Choices in the Smart Campus Management System
 In designing this system,
      we deliberately avoided Java’s built-in Collections Framework (ArrayList, HashMap, TreeMap, etc.)
@@ -111,3 +115,8 @@ Real-world Campus Analogy:
      Real-world Campus Analogy:
    Security and audit logs in campus systems usually show the most recent events first.
    Stack is perfect for “Recent Activity” or “Last 5 Actions” features.
+...............................................................................................................
+
+
+
+

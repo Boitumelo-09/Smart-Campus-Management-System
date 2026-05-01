@@ -1,11 +1,11 @@
 package models;
 
 public class Student {
-    private String fullName;
-    private String studentId;
-    private String pin;
-    private String residence;
-    private String[] modules = {"SMTA021", "SSTA021", "SCOA021", "SMTA022", "SSTA022", "SCOA022"};
+    private final String fullName;
+    private final String studentId;
+    private final String pin;
+    private final String residence;
+    private final String[] modules = {"SMTA021", "SSTA021", "SCOA021", "SMTA022", "SSTA022", "SCOA022"};
 
     public Student(String fullName, String studentId, String pin, String residence) {
         this.fullName = fullName.trim();

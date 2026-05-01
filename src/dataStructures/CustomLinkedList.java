@@ -1,6 +1,7 @@
 package dataStructures;
 import models.Student;
 
+
 public class CustomLinkedList {
     private Node head;
     private int size = 0;
@@ -24,19 +25,19 @@ public class CustomLinkedList {
     }
 
     public void displayAll() {
-        System.out.println("\n" + "=".repeat(70));
-        System.out.println("                  ALL REGISTERED STUDENTS");
-        System.out.println("=".repeat(70));
-        System.out.printf("%-28s | %-12s | %s%n", "Full Name", "Student ID", "Residence");
-        System.out.println("-".repeat(70));
+        IO.println("\n" + "_".repeat(70));
+        IO.println("                  ALL REGISTERED STUDENTS");
+        IO.println("=".repeat(70));
+        System.out.printf("%-28s | %-12s | %s%n", "Full Name", "Student No", "Residence");
+        IO.println("-".repeat(70));
 
         Node curr = head;
         while (curr != null) {
-            System.out.println(curr.data);
+            IO.println(curr.data);
             curr = curr.next;
         }
-        System.out.println("-".repeat(70));
-        System.out.println("Total Students: " + size);
+        IO.println("-".repeat(70));
+        IO.println("Total Students: " + size);
     }
 
     public int size() { return size; }

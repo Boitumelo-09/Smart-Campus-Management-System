@@ -28,7 +28,7 @@ public class CustomQueue {
     }
 
     public void displayHelpDesk() {
-        System.out.println("\n=== HELP DESK QUEUE ===");
+        System.out.println("\n   QUEUED HELP DESK TASKS    ");
         Node curr = front;
         int i = 1;
         while (curr != null) {

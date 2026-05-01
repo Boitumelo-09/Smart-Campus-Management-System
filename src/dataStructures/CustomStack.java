@@ -16,7 +16,7 @@ public class CustomStack {
     }
 
     public void displayRecent() {
-        System.out.println("\n=== RECENT ACTIVITIES (Stack - LIFO) ===");
+        System.out.println("\n    STACKED RECENT ACTIVITIES     ");
         Node curr = top;
         int i = 1;
         while (curr != null) {
