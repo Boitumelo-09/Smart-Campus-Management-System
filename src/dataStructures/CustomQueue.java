@@ -1,14 +1,16 @@
 package dataStructures;
 
+import tools.Utility;
+
 public class CustomQueue {
-    private Node front, rear;
+    Utility tools = new Utility();
 
     private static class Node {
         String data;
         Node next;
         Node(String data) { this.data = data; }
     }
-
+    private Node front, rear;
     public void enqueue(String ticket) {
         Node newNode = new Node(ticket);
         if (rear == null) {
@@ -28,11 +30,12 @@ public class CustomQueue {
     }
 
     public void displayHelpDesk() {
-        System.out.println("\n   QUEUED HELP DESK TASKS    ");
+
+        tools.heading("QUEUED HELP DESK TASKS");
         Node curr = front;
         int i = 1;
         while (curr != null) {
-            System.out.println(i++ + ". " + curr.data);
+            IO.println(i++ + ". " + curr.data);
             curr = curr.next;
         }
     }
