@@ -1,8 +1,10 @@
 package dataStructures;
 import models.Student;
+import tools.Utility;
 
 
 public class CustomLinkedList {
+    Utility tool = new Utility();
     private Node head;
     private int size = 0;
 
@@ -25,9 +27,7 @@ public class CustomLinkedList {
     }
 
     public void displayAll() {
-        IO.println("\n" + "_".repeat(70));
-        IO.println("                  ALL REGISTERED STUDENTS");
-        IO.println("=".repeat(70));
+        tool.heading("ALL REGISTERED STUDENTS");
         System.out.printf("%-28s | %-12s | %s%n", "Full Name", "Student No", "Residence");
         IO.println("-".repeat(70));
 
@@ -38,6 +38,7 @@ public class CustomLinkedList {
         }
         IO.println("-".repeat(70));
         IO.println("Total Students: " + size);
+        tool.enterToContinue();
     }
 
     public int size() { return size; }

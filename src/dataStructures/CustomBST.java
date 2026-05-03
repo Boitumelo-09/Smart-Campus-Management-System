@@ -1,17 +1,22 @@
 package dataStructures;
 import models.Student;
+import tools.Utility;
 
 public class CustomBST {
-    private Node root;
+      Utility tool = new Utility();
+    //tree ---> the actual Node(have student, left and right)
 
     private static class Node {
         Student data;
         Node left, right;
         Node(Student data) { this.data = data; }
     }
+    private Node rootNode;
+
+
 
     public void insert(Student student) {
-        root = insertRec(root, student);
+        rootNode = insertRec(rootNode, student);
     }
 
     private Node insertRec(Node node, Student student) {
@@ -28,7 +33,7 @@ public class CustomBST {
     public void searchByName(String name) {
         IO.readln("Confirm Search For: "+name.concat("..."));
 
-        Node result = searchRec(root, name);
+        Node result = searchRec(rootNode, name);
         if (result != null) {
             System.out.println("Found: " + result.data);
         } else {
@@ -39,20 +44,22 @@ public class CustomBST {
     private Node searchRec(Node node, String name) {
         if (node == null) return null;
 
-        int cmp = name.compareToIgnoreCase(node.data.getFullName());
-        if (cmp == 0) return node;
-        return cmp < 0 ? searchRec(node.left, name) : searchRec(node.right, name);
+        int stringComparisonValue = name.compareToIgnoreCase(node.data.getFullName());
+        if (stringComparisonValue == 0) return node;
+        return stringComparisonValue < 0 ? searchRec(node.left, name) : searchRec(node.right, name);
+
     }
 
     public void inorderDisplay() {
-        IO.println("\nStudents sorted by Name :");
-        inorderRec(root);
+        tool.heading("Students sorted by Name");
+        inorderRec(rootNode);
+        tool.enterToContinue();
     }
 
     private void inorderRec(Node node) {
         if (node != null) {
             inorderRec(node.left);
-            System.out.println(node.data);
+           IO.println(node.data);
             inorderRec(node.right);
         }
     }

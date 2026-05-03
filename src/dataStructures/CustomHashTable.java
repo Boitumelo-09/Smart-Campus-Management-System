@@ -2,6 +2,7 @@ package dataStructures;
 import models.Student;
 
 public class CustomHashTable {
+
     private static class Entry {
         String key;
         Student value;
@@ -10,7 +11,9 @@ public class CustomHashTable {
         Entry(String key, Student value) {
             this.key = key;
             this.value = value;
+
         }
+
     }
 
     private final Entry[] table;
@@ -27,19 +30,19 @@ public class CustomHashTable {
 
     public void put(String key, Student student) {
         int index = hash(key);
-        Entry entry = table[index];
+        Entry entryData = table[index];
 
-        while (entry != null) {
-            if (entry.key.equals(key)) {
-                entry.value = student;
+        while (entryData != null) {
+            if (entryData.key.equals(key)) {
+                entryData.value = student;
                 return;
             }
-            entry = entry.next;
+            entryData = entryData.next;
         }
 
-        Entry newEntry = new Entry(key, student);
-        newEntry.next = table[index];
-        table[index] = newEntry;
+        Entry newTemporaryEntry = new Entry(key, student);
+        newTemporaryEntry.next = table[index];
+        table[index] = newTemporaryEntry;
         size++;
     }
 
