@@ -46,9 +46,9 @@ public class SystemEngine {
                 }
             }
         } catch (NumberFormatException exception) {
-            throw new RuntimeException("Group 1 Says: ❌ Invalid input. Please enter a valid number.");
+            throw new NumberFormatException("Group 1 Says: ❌ Invalid input. Please enter a valid number.");
         } finally {
-            tool.heading("Oops! Something Went Wrong. Please try again...");
+            tool.heading("Oops! Something Went Wrong. Please try again...\n    See Error Below For More Details...");
         }
 
     }
