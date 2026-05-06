@@ -17,10 +17,28 @@ public class SystemEngine {
     private static final String ADMIN_PASSWORD = "admin123";
 
     private static void loadStudents() {
-        Student[] data = {new Student("Mkhondo Boitumelo",
-                "202402475", "2286", "Sandton Res(Off-Campus) - Room 2286"),
-                new Student("Mashego Beanca", "202401789", "0038", "MBJ Residences - Room 0038"), new Student("Selowa Refentse", "240101280", "2025", "MBJ Residences - Room 2025"), new Student("Raedani Thikhedzo", "202402331", "0691", "PPL Residence - Room 0691"), new Student("Maphanga Thabang", "240101213", "1738", "MBA Residence - Room 1738"), new Student("Tema Kagiso", "202303501", "5134", "Kayla Residence  - Room 5134"), new Student("Tsengiwe Thembinkosi", "250102831", "6743", "MBA Residences - Room 6743"), new Student("Diale Lutricia", "240101158", "1049", "VG Residences - Room 1049"), new Student("Maphidzhe Mutondwa", "240001504", "7017", "Sandton Res(Off-Campus) - Room 7017"), new Student("Chauke Austin", "202100201", "1712", "The Reds Student Residence(Off-Campus) - Room 1712"), new Student("Disoloane Shaun", "202203196", "1234", "MBK Residences - Room 1234"), new Student("Kgoale Blessing", "202400323", "1628", "BEREA Smart Res(Off-Campus) - Room 1628"), new Student("Ramatsetse Kagiso", "202101092", "1669", "Sunset Res(Off-Campus) - Room 1669"), new Student("Kgantsho Gallant", "202001320", "3847", "VK Residences - Room 3847"), new Student("Mihle Giwu", "202403013", "5463", "The Reds Student Residence(Off-Campus) - Room 5463"), new Student("Matshivha Tshinakaho", "240101211", "8577", "MBK Residences - Room 8577"), new Student("Lebese Lerato", "202400056", "9479", "BEREA Smart Res(Off-Campus) - Room 9479"), new Student("Choshi Tetelo kwena", "240001082", "0000", "Sunset Res(Off-Campus) - Room 0000"), new Student("Moloto Katlego", "240974070", "8008", "VK Residences - Room 8008"), new Student("Maluleke Mahlatsi", "250102936", "4269", "Mahlo Res(Off-Campus) - Room 4269")};
-
+        Student[] data = {
+                new Student("Mkhondo Boitumelo", "202402475", "2286", "Sandton Res(Off-Campus) - Room 2286", "Male"),
+                new Student("Mashego Beanca", "202401789", "0038", "MBJ Residences - Room 0038", "Female"),
+                new Student("Selowa Refentse", "240101280", "2025", "MBJ Residences - Room 2025", "Male"),
+                new Student("Raedani Thikhedzo", "202402331", "0691", "PPL Residence - Room 0691", "Male"),
+                new Student("Maphanga Thabang", "240101213", "1738", "MBA Residence - Room 1738", "Male"),
+                new Student("Tema Kagiso", "202303501", "5134", "Kayla Residence  - Room 5134", "Male"),
+                new Student("Tsengiwe Thembinkosi", "250102831", "6743", "MBA Residences - Room 6743", "Male"),
+                new Student("Diale Lutricia", "240101158", "1049", "VG Residences - Room 1049", "Female"),
+                new Student("Maphidzhe Mutondwa", "240001504", "7017", "Sandton Res(Off-Campus) - Room 7017", "Male"),
+                new Student("Chauke Austin", "202100201", "1712", "The Reds Student Residence(Off-Campus) - Room 1712", "Male"),
+                new Student("Disoloane Shaun", "202203196", "1234", "MBK Residences - Room 1234", "Male"),
+                new Student("Kgoale Blessing", "202400323", "1628", "BEREA Smart Res(Off-Campus) - Room 1628", "Male"),
+                new Student("Ramatsetse Kagiso", "202101092", "1669", "Sunset Res(Off-Campus) - Room 1669", "Male"),
+                new Student("Kgantsho Gallant", "202001320", "3847", "VK Residences - Room 3847", "Male"),
+                new Student("Mihle Giwu", "202403013", "5463", "The Reds Student Residence(Off-Campus) - Room 5463", "Female"),
+                new Student("Matshivha Tshinakaho", "240101211", "8577", "MBK Residences - Room 8577", "Female"),
+                new Student("Lebese Lerato", "202400056", "9479", "BEREA Smart Res(Off-Campus) - Room 9479", "Female"),
+                new Student("Choshi Tetelo kwena", "240001082", "0000", "Sunset Res(Off-Campus) - Room 0000", "Male"),
+                new Student("Moloto Katlego", "240974070", "8008", "VK Residences - Room 8008", "Male"),
+                new Student("Maluleke Mahlatsi", "250102936", "4269", "Mahlo Res(Off-Campus) - Room 4269", "Male")
+        };
         try {
             for (Student s : data) {
                 hashTable.put(s.getStudentId(), s);
@@ -41,7 +59,7 @@ public class SystemEngine {
 
         if (student != null && student.getPin().equals(pin)) {
             tool.newLine(5);
-            IO.println("\n✅ Login Successful! Hello, ".concat(student.getFullName().toUpperCase().concat(".!")));
+            IO.print("\n✅ Login Successful! Hello, ".concat(student.getGender().equalsIgnoreCase("Male") ? "Mr. " : "Ms. ").concat(student.getFullName().toUpperCase().concat("!")));
             activityStack.push("Student login: ".concat(student.getFullName().toUpperCase()));
             showStudentDashboard(student);
 
@@ -53,20 +71,21 @@ public class SystemEngine {
         }
     }
 
-    private static void showStudentDashboard(Student s) {
+    private static void showStudentDashboard(Student student) {
 
         IO.println("\n" + ".".repeat(65));
         IO.println("                    UL BLACKBOARD");
         IO.println(".".repeat(65));
-        IO.println("Name       : " + s.getFullName());
-        IO.println("Student No : " + s.getStudentId());
-        IO.println("Residence  : " + s.getResidence());
+        IO.println("Name       : " + student.getFullName());
+        IO.println("Gender     : " + student.getGender());
+        IO.println("Student No : " + student.getStudentId());
+        IO.println("Residence  : " + student.getResidence());
         IO.readln("\nPress Enter to view Semester 1 modules...");
 
         IO.println("Semester 1 Modules:");
 
         int moduleCounter = 5;
-        for (var module : s.getModules()) {
+        for (var module : student.getModules()) {
             moduleCounter--;
             IO.println("   • " + module);
             if (moduleCounter == 2) {
@@ -88,8 +107,8 @@ public class SystemEngine {
                 case 1 -> {
                     do {
                         String request = IO.readln("Enter your request: ").trim();
-                        activityStack.push(s.getFullName().concat(( ":").concat(s.getStudentId()).concat(" ")).concat(" - Request Help Desk"));
-                        helpDesk.enqueue(s.getFullName().concat(( ":").concat(s.getStudentId()).concat(" ")).concat(" - ").concat(request));
+                        activityStack.push(student.getFullName().concat(( ":").concat(student.getStudentId()).concat(" ")).concat(" - Request Help Desk"));
+                        helpDesk.enqueue(student.getFullName().concat(( ":").concat(student.getStudentId()).concat(" ")).concat(" - ").concat(request));
                         IO.println("Help Desk request submitted.\nSubmit another request?\n1. Yes\n2. No\n>>");
                         if (IO.readln().trim().equalsIgnoreCase("2")) {
                           IO.println("Thank you for visiting.");
@@ -100,8 +119,8 @@ public class SystemEngine {
                  tool.enterToContinue();
                 }
                 case 2 -> {
-                    IO.println("Goodbye, ".concat(s.getFullName().toUpperCase().concat("!")));
-                    activityStack.push("Student logout: ".concat(s.getFullName().toUpperCase()));
+                    IO.println("Goodbye, ".concat(student.getFullName().toUpperCase().concat("!")));
+                    activityStack.push("Student logout: ".concat(student.getFullName().toUpperCase()));
                 }
             }
         }
@@ -163,7 +182,7 @@ public class SystemEngine {
                     do {
                         String taskNumber = IO.readln("Resolve a task by entering the task number:");
                         String dequeuedTask= helpDesk.dequeue(Integer.parseInt(taskNumber));
-                        tool.heading("ATTENDED:".concat(dequeuedTask).concat("\nResolve another task?\n1. Yes\n2. No\n>>"));
+                        tool.heading("ATTENDED: ".concat(dequeuedTask).concat("\nResolve another task?\n1. Yes\n2. No\n>>"));
                         if(IO.readln().trim().equalsIgnoreCase("2")) {
                             IO.println("Thank you for visiting.");
                             break;
