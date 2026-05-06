@@ -38,7 +38,8 @@ public class CustomLinkedList {
         }
         IO.println("-".repeat(70));
         IO.println("Total Students: " + size);
-        tool.enterToContinue();
+
+        IO.readln("Press Enter to continue...");
     }
 
     public int size() { return size; }

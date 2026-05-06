@@ -40,20 +40,21 @@ public class SystemEngine {
         Student student = hashTable.get(id);
 
         if (student != null && student.getPin().equals(pin)) {
+            tool.newLine(5);
             IO.println("\n✅ Login Successful! Hello, ".concat(student.getFullName().toUpperCase().concat(".!")));
             activityStack.push("Student login: ".concat(student.getFullName().toUpperCase()));
             showStudentDashboard(student);
-            helpDesk.enqueue(student.getFullName().concat(" - Log In To Blackboard"));
+
         } else {
             IO.readln("❌ Invalid Student Number Or PIN. Please try again.");
-            helpDesk.enqueue("Invalid Student Number Or PIN");
+
             activityStack.push("Invalid Student Number Or PIN");
 
         }
     }
 
     private static void showStudentDashboard(Student s) {
-        tool.newLine(5);
+
         IO.println("\n" + ".".repeat(65));
         IO.println("                    UL BLACKBOARD");
         IO.println(".".repeat(65));
@@ -76,7 +77,34 @@ public class SystemEngine {
 
         }
         IO.println(".".repeat(65));
-        IO.readln("Press Enter to return to main menu...");
+
+        tool.enterToContinue();
+        {
+            tool.heading("Student Affairs");
+            IO.println("1.Request Help Desk");
+            IO.println("2.Logout");
+            int choice = Integer.parseInt(IO.readln(">>"));
+            switch (choice) {
+                case 1 -> {
+                    do {
+                        String request = IO.readln("Enter your request: ").trim();
+                        activityStack.push(s.getFullName().concat(( ":").concat(s.getStudentId()).concat(" ")).concat(" - Request Help Desk"));
+                        helpDesk.enqueue(s.getFullName().concat(( ":").concat(s.getStudentId()).concat(" ")).concat(" - ").concat(request));
+                        IO.println("Help Desk request submitted.\nSubmit another request?\n1. Yes\n2. No\n>>");
+                        if (IO.readln().trim().equalsIgnoreCase("2")) {
+                          IO.println("Thank you for visiting.");
+                            break;
+                        }
+
+                    } while (!IO.readln().trim().equalsIgnoreCase("1"));
+                 tool.enterToContinue();
+                }
+                case 2 -> {
+                    IO.println("Goodbye, ".concat(s.getFullName().toUpperCase().concat("!")));
+                    activityStack.push("Student logout: ".concat(s.getFullName().toUpperCase()));
+                }
+            }
+        }
         IO.println(".".repeat(65));
     }
 
@@ -88,20 +116,18 @@ public class SystemEngine {
         IO.readln("Confirm and proceed >>");
         if (ADMIN_USERNAME.equals(adminUserName) && ADMIN_PASSWORD.equals(adminPassword)) {
             adminDashboard();
-            activityStack.push("Logged In as Admin");
-            helpDesk.enqueue("Admin login");
+            activityStack.push("Admin Log-In Successful");
+
         } else {
-            IO.println("❌ Admin login failed.");
-            IO.readln("Please check your credentials and try again.");
-            helpDesk.enqueue("Admin login failed");
-            activityStack.push("Admin login failed");
+            IO.println("❌ Admin login failed.\nPlease check your credentials and try again...");
+            activityStack.push("Admin Log-In Failed");
         }
     }
 
     private static void adminDashboard() {
         tool.newLine(5);
-        boolean inAdmin = true;
-        while (inAdmin) {
+        boolean isAdmin = true;
+        while (isAdmin) {
             IO.println("\n ADMINISTRATION ");
             IO.println("1. View All Students");
             IO.println("2. Search by Student Number");//(HashTable - O(1))
@@ -131,9 +157,22 @@ public class SystemEngine {
                     bst.searchByName(name);
                 }
                 case 4 -> bst.inorderDisplay();
-                case 5 -> helpDesk.displayHelpDesk();
+                case 5 -> {
+                    helpDesk.displayHelpDesk();
+                    tool.heading("Help Desk Affairs");
+                    do {
+                        String taskNumber = IO.readln("Resolve a task by entering the task number:");
+                        String dequeuedTask= helpDesk.dequeue(Integer.parseInt(taskNumber));
+                        tool.heading("ATTENDED:".concat(dequeuedTask).concat("\nResolve another task?\n1. Yes\n2. No\n>>"));
+                        if(IO.readln().trim().equalsIgnoreCase("2")) {
+                            IO.println("Thank you for visiting.");
+                            break;
+                        }
+                    }while(!IO.readln().trim().equalsIgnoreCase("1"));
+                    tool.enterToContinue();
+                }
                 case 6 -> activityStack.displayRecent();
-                case 7 -> inAdmin = false;
+                case 7 -> isAdmin = false;
                 default -> IO.println("Invalid choice.");
             }
         }

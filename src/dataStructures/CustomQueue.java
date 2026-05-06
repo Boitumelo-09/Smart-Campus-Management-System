@@ -21,13 +21,38 @@ public class CustomQueue {
         }
     }
 
-    public String dequeue() {
-        if (front == null) return null;
-        String data = front.data;
-        front = front.next;
-        if (front == null) rear = null;
+    public String dequeue(int taskNumber) {
+        if (front == null || taskNumber < 1) return null;
+
+        if (taskNumber == 1) {
+            String data = front.data;
+            front = front.next;
+            if (front == null) rear = null;
+            return data;
+        }
+
+        Node previous = front;
+        Node current = front.next;
+        int currentNumber = 2;
+
+        while (current != null && currentNumber < taskNumber) {
+            previous = current;
+            current = current.next;
+            currentNumber++;
+        }
+
+        if (current == null) return null;
+
+        String data = current.data;
+        previous.next = current.next;
+
+        if (current == rear) {
+            rear = previous;
+        }
+
         return data;
     }
+
 
     public void displayHelpDesk() {
 

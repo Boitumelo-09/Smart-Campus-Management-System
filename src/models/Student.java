@@ -1,8 +1,9 @@
 package models;
 
 
+import lombok.Getter;
 
-
+@Getter
 public class Student {
     private final String fullName;
     private final String studentId;
@@ -19,12 +20,6 @@ public class Student {
         this.residence = residence;
 
     }
-
-    public String getFullName() { return fullName; }
-    public String getStudentId() { return studentId; }
-    public String getPin() { return pin; }
-    public String getResidence() { return residence; }
-    public String[] getModules() { return modules; }
 
     @Override
     public String toString() {
