@@ -51,9 +51,9 @@ public class CustomBST {
     }
 
     public void inorderDisplay() {
-        tool.heading("Students sorted by Name");
+
         inorderRec(rootNode);
-        tool.enterToContinue();
+
     }
 
     private void inorderRec(Node node) {

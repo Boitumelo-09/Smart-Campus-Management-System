@@ -4,6 +4,8 @@ import dataStructures.*;
 import models.Student;
 import tools.Utility;
 
+import static java.lang.Integer.parseInt;
+
 public class SystemEngine {
     static Utility tool = new Utility();
     private static final CustomHashTable hashTable = new CustomHashTable();
@@ -15,6 +17,35 @@ public class SystemEngine {
 
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin123";
+
+    public void run() {
+
+        loadStudents();
+
+        boolean running = true;
+
+        tool.heading("Welcome to the Smart Campus Management System\n    Developed By Group 1");
+        tool.enterToContinue();
+        while (running) {
+            tool.newLine(5);
+            tool.heading("MAIN MENU");
+            IO.println("1. Blackboard Login");
+            IO.println("2. Admin Login");
+            IO.println("3. Exit");
+            int choice = parseInt(IO.readln(">> "));
+
+            switch (choice) {
+                case 1 -> studentLogin();
+                case 2 -> adminLogin();
+                case 3 -> {
+                    IO.println("Thank you for using the system. Goodbye !");
+                    running = false;
+                }
+                default -> IO.println("Invalid option.");
+            }
+        }
+
+    }
 
     private static void loadStudents() {
         Student[] data = {
@@ -52,7 +83,7 @@ public class SystemEngine {
 
     private static void studentLogin() {
         tool.newLine(5);
-        tool.heading( "BLACKBOARD LOGIN");
+        tool.heading("BLACKBOARD LOGIN");
         String id = IO.readln("\nStudent Number : ").trim();
         String pin = IO.readln("4-digit PIN    : ").trim();
         Student student = hashTable.get(id);
@@ -60,22 +91,21 @@ public class SystemEngine {
         if (student != null && student.getPin().equals(pin)) {
             tool.newLine(5);
             IO.print("\n✅ Login Successful! Hello, ".concat(student.getGender().equalsIgnoreCase("Male") ? "Mr. " : "Ms. ").concat(student.getFullName().toUpperCase().concat("!")));
-            activityStack.push("Student login: ".concat(student.getFullName().toUpperCase()));
+            activityStack.push("Student Log-In: ".concat(student.getFullName().toUpperCase()).concat(": ").concat(student.getStudentId()));
             showStudentDashboard(student);
 
         } else {
             IO.readln("❌ Invalid Student Number Or PIN. Please try again.");
 
-            activityStack.push("Invalid Student Number Or PIN");
+            activityStack.push("Log-In Attempt: Invalid Student Number Or PIN");
 
         }
     }
 
     private static void showStudentDashboard(Student student) {
 
-        IO.println("\n" + ".".repeat(65));
-        IO.println("                    UL BLACKBOARD");
-        IO.println(".".repeat(65));
+
+       tool.heading("UL BLACKBOARD");
         IO.println("Name       : " + student.getFullName());
         IO.println("Gender     : " + student.getGender());
         IO.println("Student No : " + student.getStudentId());
@@ -90,41 +120,45 @@ public class SystemEngine {
             IO.println("   • " + module);
             if (moduleCounter == 2) {
                 IO.readln("\nPress Enter to view second semester modules...");
-                IO.println("Semester 2 Modules:");
+                IO.println("\nSemester 2 Modules:");
 
             }
 
         }
-        IO.println(".".repeat(65));
+        IO.println(".".repeat(90));
 
         tool.enterToContinue();
         {
             tool.heading("Student Affairs");
             IO.println("1.Request Help Desk");
-            IO.println("2.Logout");
-            int choice = Integer.parseInt(IO.readln(">>"));
+            IO.println("2.Log-Out");
+            int choice = parseInt(IO.readln(">>"));
             switch (choice) {
                 case 1 -> {
-                    do {
-                        String request = IO.readln("Enter your request: ").trim();
-                        activityStack.push(student.getFullName().concat(( ":").concat(student.getStudentId()).concat(" ")).concat(" - Request Help Desk"));
-                        helpDesk.enqueue(student.getFullName().concat(( ":").concat(student.getStudentId()).concat(" ")).concat(" - ").concat(request));
-                        IO.println("Help Desk request submitted.\nSubmit another request?\n1. Yes\n2. No\n>>");
-                        if (IO.readln().trim().equalsIgnoreCase("2")) {
-                          IO.println("Thank you for visiting.");
+                    while (true) {
+                        String request = IO.readln("\nEnter your request: ").trim();
+                        activityStack.push(student.getFullName().concat((": ").concat(student.getStudentId()).concat(" ")).concat(" - Request Help Desk"));
+                        helpDesk.enqueue(student.getFullName().concat((": ").concat(student.getStudentId()).concat(" ")).concat(" - ").concat(request));
+                        int helpOption = parseInt(IO.readln(" ✔ Help Desk request submitted.\nSubmit another request?\n1. Yes\n2. No\n>>"));
+                        if (helpOption == 2) {
+                            IO.println("\nThank you for visiting.");
+                            activityStack.push("Student Log-Out: ".concat(student.getFullName().toUpperCase()).concat(": ").concat(student.getStudentId()));
                             break;
+                        } else if (helpOption > 2) {
+                            IO.println("Invalid choice.");
+                            tool.enterToContinue();
                         }
 
-                    } while (!IO.readln().trim().equalsIgnoreCase("1"));
-                 tool.enterToContinue();
+                    }
+                    tool.enterToContinue();
                 }
                 case 2 -> {
                     IO.println("Goodbye, ".concat(student.getFullName().toUpperCase().concat("!")));
-                    activityStack.push("Student logout: ".concat(student.getFullName().toUpperCase()));
+                    activityStack.push("Student Log-Out: ".concat(student.getFullName().toUpperCase()).concat(": ").concat(student.getStudentId()));
                 }
             }
         }
-        IO.println(".".repeat(65));
+        IO.println(".".repeat(90));
     }
 
     private static void adminLogin() {
@@ -135,11 +169,11 @@ public class SystemEngine {
         IO.readln("Confirm and proceed >>");
         if (ADMIN_USERNAME.equals(adminUserName) && ADMIN_PASSWORD.equals(adminPassword)) {
             adminDashboard();
-            activityStack.push("Admin Log-In Successful");
+            activityStack.push("ADMIN: Log-In Successful");
 
         } else {
             IO.println("❌ Admin login failed.\nPlease check your credentials and try again...");
-            activityStack.push("Admin Log-In Failed");
+            activityStack.push("ADMIN: Log-In Failed");
         }
     }
 
@@ -147,82 +181,95 @@ public class SystemEngine {
         tool.newLine(5);
         boolean isAdmin = true;
         while (isAdmin) {
-            IO.println("\n ADMINISTRATION ");
+            tool.heading("ADMINISTRATION");
             IO.println("1. View All Students");
             IO.println("2. Search by Student Number");//(HashTable - O(1))
             IO.println("3. Search by Full Name "); //(BST)
             IO.println("4. View Students Sorted by Name ");//(BST Inorder)
             IO.println("5. View Help Desk Tasks");
             IO.println("6. View Recent Activities "); //(Stack)
-            IO.println("7. Logout");
-            int choice = Integer.parseInt(IO.readln(">>"));
-
+            IO.println("7. Log-Out");
+            int choice = parseInt(IO.readln(">>"));
 
             switch (choice) {
-                case 1 -> linkedList.displayAll();
+                case 1 -> {
+                    tool.newLine(5);
+                    linkedList.displayAll();
+                    activityStack.push("ADMIN OPERATION: View All Students");
+                    tool.enterToContinue();
+                }
                 case 2 -> {
-                    String id = IO.readln("Student Number :");
-                    Student s = hashTable.get(id);
-                    IO.println(s != null ? s : """
+                    tool.newLine(5);
+                    tool.heading("SEARCH BY STUDENT NUMBER");
+                    String studentNumber = IO.readln("Student Number :");
+                    Student student = hashTable.get(studentNumber);
+                    IO.println(student != null ? student : """
                             \s
-                            ERROR 404 :  Student\s""" + id + """ 
+                            ERROR 404 :  Student\s""" + studentNumber + """ 
                                         Not found
                             
                             """);
+                    activityStack.push("ADMIN OPERATION: Search by Student Number: ".concat(studentNumber));
+                    tool.enterToContinue();
 
                 }
                 case 3 -> {
-                    String name = IO.readln("Search: ");
+                    tool.newLine(5);
+                    tool.heading("SEARCH BY FULL NAME");
+                    String name = IO.readln("Search: ").trim();
                     bst.searchByName(name);
-                }
-                case 4 -> bst.inorderDisplay();
-                case 5 -> {
-                    helpDesk.displayHelpDesk();
-                    tool.heading("Help Desk Affairs");
-                    do {
-                        String taskNumber = IO.readln("Resolve a task by entering the task number:");
-                        String dequeuedTask= helpDesk.dequeue(Integer.parseInt(taskNumber));
-                        tool.heading("ATTENDED: ".concat(dequeuedTask).concat("\nResolve another task?\n1. Yes\n2. No\n>>"));
-                        if(IO.readln().trim().equalsIgnoreCase("2")) {
-                            IO.println("Thank you for visiting.");
-                            break;
-                        }
-                    }while(!IO.readln().trim().equalsIgnoreCase("1"));
+                    activityStack.push("ADMIN OPERATION: Search by Full Name: ".concat(name));
                     tool.enterToContinue();
                 }
-                case 6 -> activityStack.displayRecent();
+                case 4 -> {
+                    tool.newLine(5);
+                    tool.heading("STUDENTS SORTED BY NAME");
+                    bst.inorderDisplay();
+                    activityStack.push("ADMIN OPERATION: View Students Sorted by Name");
+                    tool.enterToContinue();
+                }
+                case 5 -> {
+                    tool.newLine(5);
+                    helpDesk.displayHelpDesk();
+                    tool.heading("HELP DESK AFFAIRS");
+                    int taskChoice = parseInt(IO.readln("1. Resolve a task\n2. Log-Out\n>>"));
+                    switch (taskChoice) {
+                        case 1 -> {
+                            while (true) {
+
+                                tool.heading("Help Desk Affairs");
+                                String taskNumber = IO.readln("Resolve a task by entering the task number:");
+                                String dequeuedTask = helpDesk.dequeue(parseInt(taskNumber));
+                                tool.heading("ATTENDED: ".concat(dequeuedTask));
+                                activityStack.push("ADMIN OPERATION: Resolved a task: ".concat(taskNumber));
+                                int option = Integer.parseInt(IO.readln("Resolve another task?\n   1. Yes\n   2. No\n   >>"));
+
+                                if (option == 2) {
+                                    IO.println("Thank you for visiting.");
+                                    break;
+                                } else if (option > 2) {
+                                    IO.println("Invalid choice.");
+                                    tool.enterToContinue();
+                                }
+                            }
+                            tool.enterToContinue();
+                        }
+                        case 2 -> {
+                            return;
+                        }
+                        default -> IO.println("Invalid choice.");
+                    }
+
+                }
+
+                case 6 -> {
+                    tool.newLine(5);
+                    activityStack.displayRecent();
+                    tool.enterToContinue();
+                }
                 case 7 -> isAdmin = false;
                 default -> IO.println("Invalid choice.");
             }
         }
-    }
-
-    public void run() {
-
-        loadStudents();
-
-        boolean running = true;
-
-       tool.heading("Welcome to the Smart Campus Management System\n    Developed By Group 1");
-       tool.enterToContinue();
-        while (running) {
-            tool.newLine(5);
-           tool.heading("MAIN MENU");
-            IO.println("1. Blackboard Login");
-            IO.println("2. Admin Login");
-            IO.println("3. Exit");
-            int choice = Integer.parseInt(IO.readln(">> "));
-
-            switch (choice) {
-                case 1 -> studentLogin();
-                case 2 -> adminLogin();
-                case 3 -> {
-                    IO.println("Thank you for using the system. Goodbye !");
-                    running = false;
-                }
-                default -> IO.println("Invalid option.");
-            }
-        }
-
     }
 }

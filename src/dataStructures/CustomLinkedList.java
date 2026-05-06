@@ -38,8 +38,8 @@ public class CustomLinkedList {
         }
         IO.println("-".repeat(70));
         IO.println("Total Students: " + size);
-
-        IO.readln("Press Enter to continue...");
+        IO.println("-".repeat(70));
+        IO.readln();
     }
 
     public int size() { return size; }

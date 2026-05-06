@@ -1,6 +1,9 @@
 package dataStructures;
 
+import tools.Utility;
+
 public class CustomStack {
+    Utility tool = new Utility();
     private Node top;
 
     private static class Node {
@@ -16,11 +19,11 @@ public class CustomStack {
     }
 
     public void displayRecent() {
-        System.out.println("\n    STACKED RECENT ACTIVITIES     ");
+        tool.heading("RECENT ACTIVITIES - SYSTEM LOGS ");
         Node curr = top;
         int i = 1;
         while (curr != null) {
-            System.out.println(i++ + ". " + curr.activity);
+            IO.println(i++ + ". " + curr.activity);
             curr = curr.next;
         }
     }

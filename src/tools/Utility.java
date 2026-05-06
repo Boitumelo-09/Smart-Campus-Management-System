@@ -12,9 +12,9 @@ public class Utility {
        }
    }
    public void heading(String heading) {
-       IO.println(".".repeat(65));
+       IO.println("\n"+".".repeat(90));
        IO.println("    "+heading+" ");
-       IO.println(".".repeat(65));
+       IO.println(".".repeat(90));
    }
    public void enterToContinue() {
        IO.readln("Press Enter to continue...");
