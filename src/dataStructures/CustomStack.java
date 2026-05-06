@@ -4,14 +4,14 @@ import tools.Utility;
 
 public class CustomStack {
     Utility tool = new Utility();
-    private Node top;
+
 
     private static class Node {
         String activity;
         Node next;
         Node(String activity) { this.activity = activity; }
     }
-
+    private Node top;
     public void push(String activity) {
         Node newNode = new Node(activity);
         newNode.next = top;

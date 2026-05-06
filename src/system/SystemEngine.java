@@ -26,23 +26,29 @@ public class SystemEngine {
 
         tool.heading("Welcome to the Smart Campus Management System\n    Developed By Group 1");
         tool.enterToContinue();
-        while (running) {
-            tool.newLine(5);
-            tool.heading("MAIN MENU");
-            IO.println("1. Blackboard Login");
-            IO.println("2. Admin Login");
-            IO.println("3. Exit");
-            int choice = parseInt(IO.readln(">> "));
+        try {
+            while (running) {
+                tool.newLine(5);
+                tool.heading("MAIN MENU");
+                IO.println("1. Blackboard Login");
+                IO.println("2. Admin Login");
+                IO.println("3. Exit");
+                int choice = parseInt(IO.readln(">> "));
 
-            switch (choice) {
-                case 1 -> studentLogin();
-                case 2 -> adminLogin();
-                case 3 -> {
-                    IO.println("Thank you for using the system. Goodbye !");
-                    running = false;
+                switch (choice) {
+                    case 1 -> studentLogin();
+                    case 2 -> adminLogin();
+                    case 3 -> {
+                        IO.println("Thank you for using the system. Goodbye !");
+                        running = false;
+                    }
+                    default -> IO.println("Invalid option.");
                 }
-                default -> IO.println("Invalid option.");
             }
+        } catch (NumberFormatException exception) {
+            throw new RuntimeException("Group 1 Says: ❌ Invalid input. Please enter a valid number.");
+        } finally {
+            tool.heading("Oops! Something Went Wrong. Please try again...");
         }
 
     }

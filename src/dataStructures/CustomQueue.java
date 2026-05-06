@@ -4,13 +4,13 @@ import tools.Utility;
 
 public class CustomQueue {
     Utility tools = new Utility();
-
+    private Node front, rear;
     private static class Node {
         String data;
         Node next;
         Node(String data) { this.data = data; }
     }
-    private Node front, rear;
+
     public void enqueue(String ticket) {
         Node newNode = new Node(ticket);
         if (rear == null) {
